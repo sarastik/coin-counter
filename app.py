@@ -1,9 +1,6 @@
 from coinbase.wallet.client import Client
+from api_keys import *
 import json
-
-# Insert your API key and secret here
-API_KEY = ""
-API_SECRET = ""
 
 client = Client(API_KEY, API_SECRET)
 
@@ -17,10 +14,13 @@ def sumTransactions(account):
     return (native_total, native_currency)
 
 accounts = client.get_accounts()
-print
+
 for account in accounts.data:
-    sums = sumTransactions(account)
-    print "====== {} ======".format(account.balance.currency)
-    print "Spent: {} {}".format(sums[0], sums[1])
+    nativeSum = sumTransactions(account)
+    profit = float(account.native_balance.amount) - nativeSum[0]
+
+    print "========= {} =========".format(account.balance.currency)
+    print "Spent: {} {}".format(nativeSum[0], nativeSum[1])
     print "Worth: {} {}".format(account.native_balance.amount, account.native_balance.currency)
+    print "You've {} {} {}".format(("earned" if profit > 0 else "lost"), abs(profit), account.native_balance.currency)
     print
