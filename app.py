@@ -1,26 +1,32 @@
 from coinbase.wallet.client import Client
+from flask import Flask, render_template
 from api_keys import *
 import json
 
+app = Flask(__name__)
 client = Client(API_KEY, API_SECRET)
 
 def sumTransactions(account):
     transactions = account.get_transactions()
-    native_total = 0
-    native_currency = ""
+    transactionTotal = 0
     for trans in transactions.data:
-        native_total += float(trans.native_amount.amount)
-        native_currency = trans.native_amount.currency
-    return (native_total, native_currency)
+        transactionTotal += float(trans.native_amount.amount)
+    return transactionTotal
 
 accounts = client.get_accounts()
 
-for account in accounts.data:
-    nativeSum = sumTransactions(account)
-    profit = float(account.native_balance.amount) - nativeSum[0]
+@app.route("/")
+def index():
+    accountDict = {}
+    for account in accounts.data:
+        transactionSum = sumTransactions(account)
+        profit = float(account.native_balance.amount) - transactionSum
+        accountDict[str(account.balance.currency)] = {
+            "nativeSpent": transactionSum,
+            "nativeWorth": account.native_balance.amount,
+            "profit": float(account.native_balance.amount) - transactionSum
+        }
+    return render_template("index.html", accountDict=accountDict)
 
-    print "========= {} =========".format(account.balance.currency)
-    print "Spent: {} {}".format(nativeSum[0], nativeSum[1])
-    print "Worth: {} {}".format(account.native_balance.amount, account.native_balance.currency)
-    print "You've {} {} {}".format(("earned" if profit > 0 else "lost"), abs(profit), account.native_balance.currency)
-    print
+if __name__ == "__main__":
+    app.run(debug=True)

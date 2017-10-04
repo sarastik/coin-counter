@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Coin Counter</title>
+    </head>
+    <body>
+        {% for currency, wallet in accountDict.iteritems() %}
+            <p>========= {{ currency }} =========</p>
+            <p>Spent: {{ wallet.nativeSpent }}</p>
+            <p>Worth: {{ wallet.nativeWorth }}</p>
+            {% if wallet.profit > 0 %}
+                <p style="color: green">Earnings: {{ wallet.profit }} {{ currency }}</p>
+            {% else %}
+                <p style="color: red">Earnings: {{ wallet.profit }} {{ currency }}</p>
+            {% endif %}
+        {% endfor %}
+    </body>
+</html>
