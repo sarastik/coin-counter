@@ -1,0 +1,27 @@
+body {
+    background-color: #1C2331;
+}
+
+#cards {
+    display: flex;
+}
+
+.card {
+    margin-top: 40px;
+    flex-grow: 1;
+}
+
+#btc--card {
+    margin-left: 40px;
+    margin-right: 20px;
+}
+
+#eth--card {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#ltc--card {
+    margin-left: 20px;
+    margin-right: 40px;
+}
