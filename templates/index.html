@@ -9,9 +9,9 @@
             <p>Spent: {{ wallet.nativeSpent }}</p>
             <p>Worth: {{ wallet.nativeWorth }}</p>
             {% if wallet.profit > 0 %}
-                <p style="color: green">Earnings: {{ wallet.profit }} {{ currency }}</p>
+                <p style="color: green">Earnings: {{ wallet.profit }} {{ wallet.nativeCurrency }}</p>
             {% else %}
-                <p style="color: red">Earnings: {{ wallet.profit }} {{ currency }}</p>
+                <p style="color: red">Earnings: {{ wallet.profit }} {{ wallet.nativeCurrency }}</p>
             {% endif %}
         {% endfor %}
     </body>

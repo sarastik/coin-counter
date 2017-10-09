@@ -24,6 +24,7 @@ def index():
         accountDict[str(account.balance.currency)] = {
             "nativeSpent": transactionSum,
             "nativeWorth": account.native_balance.amount,
+            "nativeCurrency": account.native_balance.currency,
             "profit": float(account.native_balance.amount) - transactionSum
         }
     return render_template("index.html", accountDict=accountDict)
