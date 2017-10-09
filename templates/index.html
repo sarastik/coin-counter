@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">   
         <link rel="stylesheet" href="../static/styles.css"> 
+
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark unique-color">
@@ -16,46 +17,48 @@
 
         <div id="cards">
             <div class="card" id="btc--card">
-                <div class="card-header deep-orange white-text">BTC</div>
+                <div class="card-header white-text">BTC</div>
                 <div class="card-body">
                     <p>Spent: {{ accountDict["BTC"].nativeSpent }}</p>
                     <p>Worth: {{ accountDict["BTC"].nativeWorth }}</p>
-                    {% if accountDict["BTC"].profit > 0 %}
-                        <p style="color: green">Earnings: {{ accountDict["BTC"].profit }} {{ accountDict["BTC"].nativeCurrency }}</p>
-                    {% else %}
-                        <p style="color: red">Earnings: {{ accountDict["BTC"].profit }} {{ accountDict["BTC"].nativeCurrency }}</p>
-                    {% endif %}
                 </div>
+                <div class="card-footer white-text">
+                    <span id="btc--profit">{{ accountDict["BTC"].profit }}</span> {{ accountDict["BTC"].nativeCurrency }}
+                </div>  
             </div>
             <div class="card" id="eth--card">
-                <div class="card-header light-green white-text">ETH</div>
+                <div class="card-header white-text">ETH</div>
                 <div class="card-body">
                     <p>Spent: {{ accountDict["ETH"].nativeSpent }}</p>
                     <p>Worth: {{ accountDict["ETH"].nativeWorth }}</p>
-                    {% if accountDict["ETH"].profit > 0 %}
-                        <p style="color: green">Earnings: {{ accountDict["ETH"].profit }} {{ accountDict["ETH"].nativeCurrency }}</p>
-                    {% else %}
-                        <p style="color: red">Earnings: {{ accountDict["ETH"].profit }} {{ accountDict["ETH"].nativeCurrency }}</p>
-                    {% endif %}
                 </div>
+                <div class="card-footer white-text">
+                    <span id="eth--profit">{{ accountDict["ETH"].profit }}</span> {{ accountDict["ETH"].nativeCurrency }}
+                </div>  
             </div>
             <div class="card" id="ltc--card">
-                <div class="card-header amber accent-4 white-text">LTC</div>
+                <div class="card-header white-text">LTC</div>
                 <div class="card-body">
                     <p>Spent: {{ accountDict["LTC"].nativeSpent }}</p>
                     <p>Worth: {{ accountDict["LTC"].nativeWorth }}</p>
-                    {% if accountDict["LTC"].profit > 0 %}
-                        <p style="color: green">Earnings: {{ accountDict["LTC"].profit }} {{ accountDict["LTC"].nativeCurrency }}</p>
-                    {% else %}
-                        <p style="color: red">Earnings: {{ accountDict["LTC"].profit }} {{ accountDict["LTC"].nativeCurrency }}</p>
-                    {% endif %}
                 </div>
+                <div class="card-footer white-text">
+                    <span id="ltc--profit">{{ accountDict["LTC"].profit }}</span> {{ accountDict["LTC"].nativeCurrency }}
+                </div>  
             </div>            
         </div>
 
-        <!-- Scripts -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>        
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>      
+        
+        <!-- Bootstrap -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+        <!-- MDB -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+
+        <!-- Custom JS -->
+        <script type="text/javascript" src="../static/scripts.js"></script>
+                
     </body>
 </html>
