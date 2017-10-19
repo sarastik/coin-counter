@@ -6,7 +6,7 @@
  * 
  * @param {string} currency The cryptocurrency for this wallet
  */
-function colorCode(currency) {
+function colorCodePanel(currency) {
     var profitID = "#" + currency + "--profit";
     var cardID = "#" + currency + "--card";
     if (parseFloat($(profitID).text()) < 0) {
@@ -19,7 +19,16 @@ function colorCode(currency) {
 }
 
 $(function() {
-    colorCode("btc");
-    colorCode("eth");
-    colorCode("ltc");
+    colorCodePanel("btc");
+    colorCodePanel("eth");
+    colorCodePanel("ltc");
+
+    $(".trans-profit").each(function(i) {
+        console.log($(this).text());
+        if (parseFloat($(this).text()) < 0) {
+            $(this).text("-$" + Math.abs($(this).text()));
+        } else {
+            $(this).text("$" + $(this).text());
+        }
+    });
 });

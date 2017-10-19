@@ -15,37 +15,78 @@
             <a class="navbar-brand" href="#">Coin Counter</a>
         </nav>
 
-        <div id="cards">
-            <div class="card" id="btc--card">
-                <div class="card-header white-text">BTC</div>
-                <div class="card-body">
-                    <p>Spent: {{ accountDict["BTC"].nativeSpent }}</p>
-                    <p>Worth: {{ accountDict["BTC"].nativeWorth }}</p>
+        <div id="cards" class="container-fluid">
+            <div class="row">
+                <div class="card col" id="btc--card">
+                    <div class="card-header white-text">
+                        <h3>BTC</h3>
+                        <h3 class="panel-rate">${{ "%.2f" % (1 / rates["rates"]["BTC"]) }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title col">Spent: {{ accountDict["BTC"].nativeSpent }}<i class="fa fa-long-arrow-right col col-md-auto" aria-hidden="true"></i>Worth: {{ accountDict["BTC"].nativeWorth }}</h4>
+                        <hr class="my-2">
+                        {% for trans in accountDict["BTC"]["transactions"] %}
+                            <div class="transaction container">
+                                <div class="transaction-row row justify-content-md-center">
+                                    <div class="col">{{ trans.details.title.split(" ")[0] }}</div>
+                                    <div class="col ">{{ "%.4f" % trans.amount.amount }} {{ trans.amount.currency }}</div>
+                                    <div class="col col-md-auto">@ ${{ "%.2f" % trans.rate }}</div>
+                                    <div class="col trans-profit">{{ "%.2f" % trans.profit }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer white-text">
+                        <span id="btc--profit">{{ accountDict["BTC"].profit }}</span> {{ accountDict["BTC"].nativeCurrency }}
+                    </div>  
                 </div>
-                <div class="card-footer white-text">
-                    <span id="btc--profit">{{ accountDict["BTC"].profit }}</span> {{ accountDict["BTC"].nativeCurrency }}
-                </div>  
-            </div>
-            <div class="card" id="eth--card">
-                <div class="card-header white-text">ETH</div>
-                <div class="card-body">
-                    <p>Spent: {{ accountDict["ETH"].nativeSpent }}</p>
-                    <p>Worth: {{ accountDict["ETH"].nativeWorth }}</p>
+                <div class="card col" id="eth--card">
+                        <div class="card-header white-text">
+                                <h3>ETH</h3>
+                                <h3 class="panel-rate">${{ "%.2f" % (1 / rates["rates"]["ETH"]) }}</h3>
+                            </div>
+                            <div class="card-body">
+                        <h4 class="card-title col">Spent: {{ accountDict["ETH"].nativeSpent }}<i class="fa fa-long-arrow-right col col-md-auto" aria-hidden="true"></i>Worth: {{ accountDict["ETH"].nativeWorth }}</h4>
+                        <hr class="my-2">
+                        {% for trans in accountDict["ETH"]["transactions"] %}
+                            <div class="transaction container">
+                                <div class="transaction-row row justify-content-md-center">
+                                    <div class="col">{{ trans.details.title.split(" ")[0] }}</div>
+                                    <div class="col ">{{ "%.4f" % trans.amount.amount }} {{ trans.amount.currency }}</div>
+                                    <div class="col col-md-auto">@ ${{ "%.2f" % trans.rate }}</div>
+                                    <div class="col trans-profit">{{ "%.2f" % trans.profit }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer white-text">
+                        <span id="eth--profit">{{ accountDict["ETH"].profit }}</span> {{ accountDict["ETH"].nativeCurrency }}
+                    </div>  
                 </div>
-                <div class="card-footer white-text">
-                    <span id="eth--profit">{{ accountDict["ETH"].profit }}</span> {{ accountDict["ETH"].nativeCurrency }}
-                </div>  
-            </div>
-            <div class="card" id="ltc--card">
-                <div class="card-header white-text">LTC</div>
-                <div class="card-body">
-                    <p>Spent: {{ accountDict["LTC"].nativeSpent }}</p>
-                    <p>Worth: {{ accountDict["LTC"].nativeWorth }}</p>
+                <div class="card col" id="ltc--card">
+                        <div class="card-header white-text">
+                                <h3>LTC</h3>
+                                <h3 class="panel-rate">${{ "%.2f" % (1 / rates["rates"]["LTC"]) }}</h3>
+                            </div>
+                            <div class="card-body">
+                        <h4 class="card-title col">Spent: {{ accountDict["LTC"].nativeSpent }}<i class="fa fa-long-arrow-right col col-md-auto" aria-hidden="true"></i>Worth: {{ accountDict["LTC"].nativeWorth }}</h4>
+                        <hr class="my-2">
+                        {% for trans in accountDict["LTC"]["transactions"] %}
+                            <div class="transaction container">
+                                <div class="transaction-row row justify-content-md-center">
+                                    <div class="col">{{ trans.details.title.split(" ")[0] }}</div>
+                                    <div class="col ">{{ "%.4f" % trans.amount.amount }} {{ trans.amount.currency }}</div>
+                                    <div class="col col-md-auto">@ ${{ "%.2f" % trans.rate }}</div>
+                                    <div class="col trans-profit">{{ "%.2f" % trans.profit }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer white-text">
+                        <span id="ltc--profit">{{ accountDict["LTC"].profit }}</span> {{ accountDict["LTC"].nativeCurrency }}
+                    </div>  
                 </div>
-                <div class="card-footer white-text">
-                    <span id="ltc--profit">{{ accountDict["LTC"].profit }}</span> {{ accountDict["LTC"].nativeCurrency }}
-                </div>  
-            </div>            
+            </div>         
         </div>
 
         <!-- JQuery -->
