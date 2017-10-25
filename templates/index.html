@@ -31,7 +31,7 @@
                                     <div class="col">{{ trans.details.title.split(" ")[0] }}</div>
                                     <div class="col ">{{ "%.4f" % trans.amount.amount }} {{ trans.amount.currency }}</div>
                                     <div class="col col-md-auto">@ ${{ "%.2f" % trans.rate }}</div>
-                                    <div class="col trans-profit">{{ "%.2f" % trans.profit }}</div>
+                                    <div class="col trans-profit">{{ trans.profit }}</div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -54,7 +54,7 @@
                                     <div class="col">{{ trans.details.title.split(" ")[0] }}</div>
                                     <div class="col ">{{ "%.4f" % trans.amount.amount }} {{ trans.amount.currency }}</div>
                                     <div class="col col-md-auto">@ ${{ "%.2f" % trans.rate }}</div>
-                                    <div class="col trans-profit">{{ "%.2f" % trans.profit }}</div>
+                                    <div class="col trans-profit">{{ trans.profit }}</div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -77,7 +77,7 @@
                                     <div class="col">{{ trans.details.title.split(" ")[0] }}</div>
                                     <div class="col ">{{ "%.4f" % trans.amount.amount }} {{ trans.amount.currency }}</div>
                                     <div class="col col-md-auto">@ ${{ "%.2f" % trans.rate }}</div>
-                                    <div class="col trans-profit">{{ "%.2f" % trans.profit }}</div>
+                                    <div class="col trans-profit">{{ trans.profit }}</div>
                                 </div>
                             </div>
                         {% endfor %}

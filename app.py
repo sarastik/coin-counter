@@ -55,7 +55,10 @@ def index():
         for trans in transactions:
             trans["rate"] = getTransactionRate(trans)
             trans["amount"]["amount"] = float(trans["amount"]["amount"])
-            trans["profit"] = getTransactionProfit(trans)
+            if "Sold" in trans["details"]["title"]:
+                trans["profit"] = "-"
+            else:
+                trans["profit"] = "%.2f" % getTransactionProfit(trans)
 
         # Format the data for the front end
         accountDict[str(account.balance.currency)] = {

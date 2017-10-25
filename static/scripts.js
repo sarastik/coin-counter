@@ -24,11 +24,12 @@ $(function() {
     colorCodePanel("ltc");
 
     $(".trans-profit").each(function(i) {
-        console.log($(this).text());
-        if (parseFloat($(this).text()) < 0) {
-            $(this).text("-$" + Math.abs($(this).text()));
-        } else {
-            $(this).text("$" + $(this).text());
+        if (parseFloat($(this).text() != "-")) {
+            if (parseFloat($(this).text()) < 0) {
+                $(this).text("-$" + Math.abs($(this).text()));
+            } else {
+                $(this).text("$" + $(this).text());
+            }
         }
     });
 });
