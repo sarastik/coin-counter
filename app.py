@@ -1,10 +1,15 @@
 from coinbase.wallet.client import Client
 from flask import Flask, render_template
 from api_keys import *
+import requests
 import json
 
 app = Flask(__name__)
 client = Client(API_KEY, API_SECRET)
+
+EXCHANGES_TO_DISPLAY = ["BTC", "ETH", "LTC", "VTC", "BCH", "XMR", "XRP"]
+EXCHANGE_TO = "USD"
+BITTREX_MARKETS_ENDPOINT = "https://bittrex.com/api/v1.1/public/getmarkets"
 
 def sumTransactions(account):
     """
@@ -41,10 +46,24 @@ def getTransactionProfit(trans, nativeSell=50, cryptoSell=None):
         profit = nativeSell - nativeAtOriginalRate
     return profit
 
+def getExchangeRatesToDisplay():
+    """
+    """
+    requestUrl = "https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}".format(
+        ",".join(EXCHANGES_TO_DISPLAY),
+        EXCHANGE_TO
+    )
+
+    response = requests.get(requestUrl)
+    responseDict = json.loads(response.text)
+    return responseDict
+
 @app.route("/")
 def index():
     accountDict = {}
     accounts = client.get_accounts()
+
+    exchangeDict = getExchangeRatesToDisplay()
 
     for account in accounts.data:
 
@@ -68,11 +87,11 @@ def index():
             "profit": float(account.native_balance.amount) - transactionSum,
             "transactions": transactions
         }
-        rates = client.get_exchange_rates()
-        for crypto in accountDict.keys():
-            rates["rates"][crypto] = float(rates["rates"][crypto])
 
-    return render_template("index.html", accountDict=accountDict, rates=rates)
+    return render_template("index.html", accountDict=accountDict, 
+                                         exchangeDict=exchangeDict, 
+                                         exchangeOrder=EXCHANGES_TO_DISPLAY,
+                                         exchangeTo=EXCHANGE_TO)
 
 if __name__ == "__main__":
     app.run(debug=True)

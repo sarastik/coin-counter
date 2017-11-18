@@ -15,12 +15,26 @@
             <a class="navbar-brand" href="#">Coin Counter</a>
         </nav>
 
+        <div id="exchange-holder" class="row">
+        {% for coin in exchangeDict.keys() %}
+            <div class="col-md-3">
+                <div class="card mdb-color lighten-2 text-center z-depth-2">
+                    <div class="card-body">
+                        <p class="white-text mb-0">{{ coin }}.....${{ exchangeDict[coin][exchangeTo] }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        <hr>
+
         <div id="cards" class="container-fluid">
             <div class="row">
                 <div class="card col" id="btc--card">
                     <div class="card-header white-text">
                         <h3>BTC</h3>
-                        <h3 class="panel-rate">${{ "%.2f" % (1 / rates["rates"]["BTC"]) }}</h3>
+                        <h3 class="panel-rate">${{ exchangeDict["BTC"][exchangeTo] }}</h3>
                     </div>
                     <div class="card-body">
                         <h4 class="card-title col">Spent: {{ accountDict["BTC"].nativeSpent }}<i class="fa fa-long-arrow-right col col-md-auto" aria-hidden="true"></i>Worth: {{ accountDict["BTC"].nativeWorth }}</h4>
@@ -43,7 +57,7 @@
                 <div class="card col" id="eth--card">
                         <div class="card-header white-text">
                                 <h3>ETH</h3>
-                                <h3 class="panel-rate">${{ "%.2f" % (1 / rates["rates"]["ETH"]) }}</h3>
+                                <h3 class="panel-rate">${{ exchangeDict["ETH"][exchangeTo] }}</h3>
                             </div>
                             <div class="card-body">
                         <h4 class="card-title col">Spent: {{ accountDict["ETH"].nativeSpent }}<i class="fa fa-long-arrow-right col col-md-auto" aria-hidden="true"></i>Worth: {{ accountDict["ETH"].nativeWorth }}</h4>
@@ -66,7 +80,7 @@
                 <div class="card col" id="ltc--card">
                         <div class="card-header white-text">
                                 <h3>LTC</h3>
-                                <h3 class="panel-rate">${{ "%.2f" % (1 / rates["rates"]["LTC"]) }}</h3>
+                                <h3 class="panel-rate">${{ exchangeDict["LTC"][exchangeTo] }}</h3>
                             </div>
                             <div class="card-body">
                         <h4 class="card-title col">Spent: {{ accountDict["LTC"].nativeSpent }}<i class="fa fa-long-arrow-right col col-md-auto" aria-hidden="true"></i>Worth: {{ accountDict["LTC"].nativeWorth }}</h4>

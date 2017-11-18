@@ -17,6 +17,11 @@ h3 {
     margin-bottom: 0px;
 }
 
+#exchange-holder {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
 .panel-rate {
     text-align: right;
     flex-grow: 1;
