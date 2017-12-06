@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from api_keys import *
 import requests
 import json
+import csv
 
 app = Flask(__name__)
 client = Client(API_KEY, API_SECRET)
@@ -10,6 +11,7 @@ client = Client(API_KEY, API_SECRET)
 EXCHANGES_TO_DISPLAY = ["BTC", "ETH", "LTC", "VTC", "BCH", "XMR", "XRP"]
 EXCHANGE_TO = "USD"
 BITTREX_MARKETS_ENDPOINT = "https://bittrex.com/api/v1.1/public/getmarkets"
+CSV_FILEPATH = "wallet.csv"
 
 def sumTransactions(account):
     """
@@ -46,50 +48,40 @@ def getTransactionProfit(trans, nativeSell=50, cryptoSell=None):
         profit = nativeSell - nativeAtOriginalRate
     return profit
 
-def getExchangeRatesToDisplay():
+def getExchangeRatesToDisplay(exchangesToDisplay, exchangeTo):
     """
+    Given a list of currencies to display and a currency to exchange to, 
+    returns the API response containing current exchange rates for currencies specified. 
     """
     requestUrl = "https://min-api.cryptocompare.com/data/pricemulti?fsyms={}&tsyms={}".format(
-        ",".join(EXCHANGES_TO_DISPLAY),
-        EXCHANGE_TO
+        ",".join(exchangesToDisplay),
+        exchangeTo
     )
 
     response = requests.get(requestUrl)
     responseDict = json.loads(response.text)
     return responseDict
 
+def getProfitsFromCSV(filePath):
+    coinsToDollarsOwned = {}
+    with open(filePath, 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        reader.next()
+        for row in reader:
+            coinsToDollarsOwned[row[0]] = {"dollarsSpent": row[1], "coinsOwned": row[2]}
+    
+    #TODO: get exchange rates * amount owned and compare to dollars spent
+
 @app.route("/")
 def index():
     accountDict = {}
     accounts = client.get_accounts()
 
-    exchangeDict = getExchangeRatesToDisplay()
+    exchangeDict = getExchangeRatesToDisplay(EXCHANGES_TO_DISPLAY, EXCHANGE_TO)
 
-    for account in accounts.data:
+    
 
-        # Get total, profit, and rates
-        transactionSum = sumTransactions(account)
-        profit = float(account.native_balance.amount) - transactionSum
-        transactions = account.get_transactions().data
-        for trans in transactions:
-            trans["rate"] = getTransactionRate(trans)
-            trans["amount"]["amount"] = float(trans["amount"]["amount"])
-            if "Sold" in trans["details"]["title"]:
-                trans["profit"] = "-"
-            else:
-                trans["profit"] = "%.2f" % getTransactionProfit(trans)
-
-        # Format the data for the front end
-        accountDict[str(account.balance.currency)] = {
-            "nativeSpent": transactionSum,
-            "nativeWorth": account.native_balance.amount,
-            "nativeCurrency": account.native_balance.currency,
-            "profit": float(account.native_balance.amount) - transactionSum,
-            "transactions": transactions
-        }
-
-    return render_template("index.html", accountDict=accountDict, 
-                                         exchangeDict=exchangeDict, 
+    return render_template("index.html", exchangeDict=exchangeDict, 
                                          exchangeOrder=EXCHANGES_TO_DISPLAY,
                                          exchangeTo=EXCHANGE_TO)
 
